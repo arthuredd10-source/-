@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <title>مكتبة المشكاة</title>
+    <style>
+        :root{
+            --white: #8e57bb;
+            --black: #8c00ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #13102e;
+            background: linear-gradient(135deg, #0f0c29 0%, #2b2942 50%, #16162e 100%);
+            color: #333;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(102, 126, 234, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(118, 75, 162, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(30px, -30px); }
+            66% { transform: translate(-20px, 20px); }
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(11, 10, 24, 0.699);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+            transition: all 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 20px rgba(104, 86, 207, 0.6));
+        }
+
+        .nav-items {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            flex: 1;
+        }
+
+        .nav-link {
+            color: #5a1fb3;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ad60bd, #6c4baa);
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .nav-link:hover::before {
+            opacity: 1;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        /* Hero Section */
+        .howr {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            margin: 3rem auto;
+            max-width: 1200px;
+            border-radius: 30px;
+            box-shadow: 0 8px 32px rgb(0, 0, 0);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .howr::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .glow {
+            color: var(--white);
+            text-shadow: 0 0 20px #070707, 0 0 40px #000000;
+        }
+
+        @keyframes glow {
+            from { 
+                text-shadow: 0 0 20px rgba(102, 126, 234, 0.8), 0 0 40px rgba(118, 75, 162, 0.6);
+            }
+            to { 
+                text-shadow: 0 0 30px rgba(102, 126, 234, 1), 0 0 60px rgba(118, 75, 162, 0.8), 0 0 80px rgba(102, 126, 234, 0.6);
+            }
+        }
+
+        h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        h4 {
+            font-size: 1.5rem;
+            margin: 2rem 0;
+            line-height: 2;
+            position: relative;
+        }
+
+        .howr img {
+            max-width: 500px;
+            width: 100%;
+            height: auto;
+            border-radius: 30px;
+            margin-top: 1rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transition: all 0.5s ease;
+            position: relative;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .howr img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 30px 80px rgba(19, 53, 206, 0.486);
+        }
+
+        /* Details Section */
+        .details {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 3rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            box-shadow: 0 10px 50px rgb(0, 0, 0);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .details h2 {
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 11px rgba(0, 0, 0, 0.486);
+            font-size: 2.5rem;
+        }
+
+        .details h6 {
+            text-align: center;
+            color: var(--white) ;
+            font-size: 1.2rem;
+            text-shadow: 0 0 11px rgba(0, 0, 0, 0.486);
+            margin-bottom: 3rem;
+        }
+
+        /* Book Cards */
+        .details-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            padding: 1rem;
+        }
+
+        .detail {
+            background: linear-gradient(135deg, rgba(56, 76, 158, 0.9) 0%, rgb(114, 25, 197) 100%);
+            padding: 2.5rem;
+            border-radius: 40px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detail::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .detail:hover::before {
+            left: 100%;
+        }
+
+        .detail:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(59, 84, 228, 0.664)
+        }
+
+        .detail i {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+        }
+
+        @keyframes bookFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .detail:hover i {
+            animation: bookSpin 0.8s ease;
+        }
+
+        @keyframes bookSpin {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .detail h3 {
+            color: white;
+            font-size: 1.4rem;
+            margin: 1.5rem 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Buttons */
+        .cta {
+            padding: 0.9rem 2.5rem;
+            margin: 0.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.6s;
+        }
+
+        .cta:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .cta.dark {
+            background: #ffffff;
+            color: #000000;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .cta.dark:hover {
+            background-color: #2da0ff;;
+            color: #fff;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 3px 8px 25px rgba(255, 255, 255, 0.650);
+        }
+
+        .cta.deep {
+            background: rgba(128, 128, 128, 0.397);
+            color: #ffffff;
+            border: 2px solid #ffffffc9;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta.deep:hover {
+            background-color:rgb(147, 250, 44);
+            color: #000;
+            border: 2px solid rgb(147, 250, 44);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 3px 8px 25px rgba(255, 255, 255, 0.650);
+        }
+
+        .cta.none{
+            background: rgb(255, 0, 0);
+            color: #ffffff;
+            border: 2px solid #000000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        } 
+
+        .notexi{
+            color: #ff0000;
+            font-size: 20px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* Team Section */
+        #movement5 .details-list {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        #movement5 .detail {
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.9) 0%, rgba(245, 87, 108, 0.9) 100%);
+        }
+
+        #movement5 .detail:hover {
+            box-shadow: 0 20px 60px rgba(245, 87, 108, 0.5);
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #ffffff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.5);
+            transition: all 0.3s ease;
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.7);
+        }
+
+        /* Particles effect */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFloat 15s infinite;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .nav-logo {
+                width: 50px;
+                height: 50px;
+            }
+
+            .nav-items {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            h4 {
+                font-size: 1.2rem;
+            }
+
+            .details-list {
+                grid-template-columns: 1fr;
+            }
+
+            .howr {
+                padding: 3rem 1.5rem;
+            }
+
+            .howr img {
+                max-width: 300px;
+            }
+
+            .detail {
+                padding: 2rem;
+            }
+        }
+
+        /* Loading animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .details, .howr {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 12, 41, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #546ee4, #663d8f);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='95' fill='white' stroke='%23666' stroke-width='2'/%3E%3Ccircle cx='100' cy='50' r='20' fill='%234CAF50'/%3E%3Cpath d='M70 80 L100 110 L70 100 L60 95 L55 92 L52 90 Z' fill='%234CAF50'/%3E%3Cpath d='M130 80 L100 110 L130 100 L140 95 L145 92 L148 90 Z' fill='%234CAF50'/%3E%3Cpath d='M75 85 L100 110 L80 100 Z' fill='%232E7D32'/%3E%3Cpath d='M125 85 L100 110 L120 100 Z' fill='%232E7D32'/%3E%3Ctext x='100' y='140' font-family='Arial' font-size='45' fill='%23d32f2f' text-anchor='middle' font-weight='bold'%3Eالمشكاة%3C/text%3E%3Cline x1='45' y1='155' x2='85' y2='155' stroke='black' stroke-width='2'/%3E%3Cline x1='115' y1='155' x2='155' y2='155' stroke='black' stroke-width='2'/%3E%3Ctext x='100' y='175' font-family='Arial' font-size='20' fill='black' text-anchor='middle'%3Eمدارس%3C/text%3E%3C/svg%3E" alt="شعار المشكاة" class="nav-logo">
+        <ul class="nav-items">
+            <li class="nav-item"><a href="#home" class="nav-link"><i class="fa fa-home"></i></a></li>
+            <li class="nav-item"><a href="#movement1" class="nav-link">من نحن</a></li>
+            <li class="nav-item"><a href="#movement2" class="nav-link">الكتب الدراسية</a></li>
+            <li class="nav-item"><a href="#movement3" class="nav-link">الكتب العامة</a></li>
+            <li class="nav-item"><a href="#movement4" class="nav-link">الكتب الدينية</a></li>
+            <li class="nav-item"><a href="#movement5" class="nav-link">مصممين الموقع</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div><section id="home"></section></div>
+        <!-- من نحن -->
+        <div class="howr">
+            <section id="movement1">
+                <h2 class="glow">من نحن</h2>
+            </section>
+            <h4 class="glow">             نحن عقول طموحة وقلوب شغوفة، طلاب معمل التقنية الرقمية في ثانوية مشكاة المنار. هنا، لا نتعلم فقط، بل نبتكر، نصمم، ونحول الأفكار إلى واقع رقمي ملموس، ومستعدين لتشكيل مستقبلنا التقني بأنفسنا.
+</h4>
+            <img src="mshkat_school.png" alt="مدارس المشكاة">
+        </div>
+
+        <!-- الكتب الدراسية -->
+        <div class="details">
+            <section id="movement2">
+                <h2>الكتب الدراسية</h2>
+            </section>
+            <h6>مجموعة من الكتب الدراسية</h6>
+            <div class="details-list">
+                <div class="detail">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>كتاب الرياضيات 1-1</h3>
+                    <a href="book-alriadiaat1-1.pdf"><button class="cta dark">الكتاب</button></a>
+                    <a herf="" class="notexi"><button class="cta none">حلول</button><br> حلول كتاب الرياضيات غير متوفره حاليا</a>
+                </div>
+                <div class="detail">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>كتاب الكفايات اللغوية1-1</h3>
+                    <a href="الكفايات اللغوية-r.pdf"><button class="cta dark">الكتاب</button></a>
+                    <a href="الكفايات اللغوية-w.pdf"><button class="cta deep">حلول</button></a>
+                </div>
+                <div class="detail">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>كتاب الكيمياء1</h3>
+                    <a href="الكيمياء-r.pdf"><button class="cta dark">الكتاب</button></a>
+                    <a href="الكيمياء-w.pdf"><button class="cta deep">حلول</button></a>
+                </div>
+                <div class="detail">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>كتاب الاحياء1</h3>
+                    <a href="الاحياء-r.pdf"><button class="cta dark">الكتاب</button></a>
+                    <a href="الاحياء-w.pdf"><button class="cta deep">حلول</button></a>
+                </div>
+                <div class="detail">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>كتاب اللغة الانجليزية1</h3>
+                    <a href="انجليزي 1 أول ثانوي الجزء الأول - 1447 هـ.pdf"><button class="cta dark">الكتاب</button></a>
+                    <a href="الانجليزي-w.pdf"><button class="cta deep">حلول</button></a>
+                </div>
+                <div class="detail">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>كتاب التقنية الرقمية1-1</h3>
+                    <a href="المهارات الرقمية-r.pdf"><button class="cta dark">الكتاب</button></a>
+                    <a href="المهارات الرقمية-w.pdf"><button class="cta deep">حلول</button></a>
+                </div>
+                <div class="detail">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>كتاب القرآن الكريم وتفسيره1-1</h3>
+                    <a href="القرآن الكريم وتفسيره أول ثانوي الجزء الأول - 1447 هـ.pdf"><button class="cta dark">الكتاب</button></a>
+                    <a href="w-القرآن الكريم وتفسيره أول ثانوي الجزء الأول - 1447 هـ.pdf"><button class="cta deep">حلول</button></a>
+                </div>
+                <div class="detail">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>كتاب التفكير الناقد1-1</h3>
+                    <a href="التفكير الناقد-r.pdf"><button class="cta dark">الكتاب</button></a>
+                    <a href="التفكير الناقد-w.pdf"><button class="cta deep">حلول</button></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- الكتب العامة -->
+        <div class="details">
+            <section id="movement3">
+                <h2>الكتب العامة</h2>
+            </section>
+            <h6>مجموعة من الكتب المتنوعة</h6>
+            <div class="details-list">
+                <div class="detail">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3> الدماغ المُبتكِر</h3>
+                    <a href="الدماغ_المبتكر.pdf"><button class="cta dark">الكتاب</button></a>
+                </div>
+                <div class="detail">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3> علم البيئة</h3>
+                    <a href="علم_البيئة.pdf"><button class="cta dark">الكتاب</button></a>
+                </div>
+                <div class="detail">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>حساب الكون بالأرقام</h3>
+                    <a href="حساب_الكون_بالأرقام.pdf"><button class="cta dark">الكتاب</button></a>
+                </div>
+                <div class="detail">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>علم البيانات</h3>
+                    <a href="علم_البيانات.pdf"><button class="cta dark">الكتاب</button></a>
+                </div>
+                <div class="detail">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>فن قيادة الذات</h3>
+                    <a href="كتاب فن قيادة الذات PDF – محمد رجب.pdf"><button class="cta dark">الكتاب</button></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- الكتب الدينية -->
+        <div class="details">
+            <section id="movement4">
+                <h2>الكتب الدينية</h2>
+            </section>
+            <h6>مجموعة من الكتب الشريعة الاسلامية</h6>
+            <div class="details-list">
+                <div class="detail">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>الدر المنثور في التفسير بالمأثور-المجلد 1</h3>
+                    <a href="الدر المنثور-المجلد1.pdf"><button class="cta dark">الكتاب</button></a>
+                </div>
+                <div class="detail">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>الدر المنثور في التفسير بالمأثور-المجلد 2</h3>
+                    <a href="الدر المنثور-المجلد2.pdf"><button class="cta dark">الكتاب</button></a>
+                </div>
+                <div class="detail">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>صحيح البخاري</h3>
+                    <a href="صحيح_البخاري.pdf"><button class="cta dark">الكتاب</button></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- مصممين الموقع -->
+        <div class="details">
+            <section id="movement5">
+                <h2>مصممين الموقع</h2>
+            </section>
+            <h6>تم توزيع وتقسيم المهام على الفريق ادناه</h6>
+            <div class="details-list">
+                <div class="detail">
+                    <i class="fa-solid fa-user"></i>
+                    <h3>ياسر عبدالله الشهري</h3>
+                </div>
+                <div class="detail">
+                    <i class="fa-solid fa-user"></i>
+                    <h3>منصور ناصر اليامي</h3>
+                </div>
+                <div class="detail">
+                    <i class="fa-solid fa-user"></i>
+                    <h3>عبدالله عمر العمري</h3>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scroll to top button -->
+    <div class="scroll-top" id="scrollTop">
+        <i class="fa-solid fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Particles effect
+        function createParticles() {
+            const particleCount = 30;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                document.body.appendChild(particle);
+            }
+        }
+
+        // Scroll to top functionality
+        const scrollTop = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
+
+        scrollTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize particles
+        createParticles();
+
+        // Add hover effect sound (optional)
+        const details = document.querySelectorAll('.detail');
+        details.forEach(detail => {
+            detail.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            });
+        });
+    </script>
+</body>
+</html>
